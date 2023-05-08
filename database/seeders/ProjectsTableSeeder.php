@@ -42,9 +42,13 @@ class ProjectsTableSeeder extends Seeder
             $new_project->save();
 
             $num_technologies = rand(0, 9);
+            $attached_technology_ids = [];
+
             for ($j = 0; $j < $num_technologies; $j++) {
-                $random_technology_id = $faker->randomElement($technology_ids);
+                $available_technology_ids = array_diff($technology_ids, $attached_technology_ids);
+                $random_technology_id = $faker->randomElement($available_technology_ids);
                 $new_project->technologies()->attach($random_technology_id);
+                $attached_technology_ids[] = $random_technology_id;
             }
         }
     }

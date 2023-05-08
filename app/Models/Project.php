@@ -10,6 +10,8 @@ class Project extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $with = ['type', 'technologies'];
+
     protected $fillable = [
         'title',
         'description',
@@ -29,13 +31,13 @@ class Project extends Model
         return $this->belongsToMany(Technology::class);
     }
 
-    public function getRelatedProject()
-    {
-        return $this->type->projects()->where('id', '!=', $this->id)->get();
-    }
-
     public function getTechnologyIds()
     {
         return $this->technologies->pluck('id')->all();
+    }
+
+    public function getRelatedProject()
+    {
+        return $this->type->projects()->where('id', '!=', $this->id)->get();
     }
 }
