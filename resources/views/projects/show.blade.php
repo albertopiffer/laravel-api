@@ -22,6 +22,16 @@
 
     <div class="row">
         <div class="col-12">
+            @forelse($project->technologies as $technology )
+                <span class="badge rounded-pill text-bg-light">{{ $technology->name }}</span>
+            @empty
+                -
+            @endforelse
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
             <p>{{ $project->description }}</p>
         </div>
     </div>

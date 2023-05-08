@@ -45,9 +45,14 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $data = $this->validation($request);
+
         $data['slug'] = Str::slug($data['title']);
 
         $newproject = Project::create($data);
+
+        if (isset($data['technologies'])) {
+            $newproject->technologies()->attach($data['technologies']);
+        }
 
         return to_route('projects.show', $newproject);
     }
